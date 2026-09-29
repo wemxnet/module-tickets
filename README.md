@@ -20,7 +20,9 @@ Default departments: General Support, Technical Support, Billing, Sales, and Abu
 
 ## Install
 
-Install from the WemX marketplace, or place this repository at `extensions/Modules/Tickets` and enable **Tickets**.
+Install from the WemX marketplace, or download `Tickets.zip` from a GitHub release and place the `Tickets` folder at `extensions/Modules/Tickets`. Then enable **Tickets**.
+
+Publishing a release builds `Tickets.zip`. Unzipping it creates a folder named `Tickets`. GitHub’s own “Source code” archive still unpacks to `module-tickets-<tag>`. Use `Tickets.zip`.
 
 Enabling the module runs its migrations, adds the admin permissions, and creates the default departments. Uninstalling keeps existing ticket data.
 

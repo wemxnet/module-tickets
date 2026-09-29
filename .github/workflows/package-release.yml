@@ -1,0 +1,40 @@
+name: Package release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  package:
+    name: Attach Tickets.zip
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Package files into a Tickets folder
+        run: |
+          mkdir -p build/Tickets
+          rsync -a \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude="build" \
+            --exclude=".DS_Store" \
+            ./ build/Tickets/
+          (
+            cd build
+            zip -r Tickets.zip Tickets
+          )
+          unzip -l build/Tickets.zip
+
+      - name: Upload zip to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/Tickets.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
